@@ -1,3 +1,2 @@
 # Thanaphat-Gee.github.io
-#
-Thikhumporn
+#Thikhumporn
