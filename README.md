@@ -1,6 +1,6 @@
 # Thanaphat-Gee.github.io
 
-ธนภัทร อารมย์ชื่น — CV
+ธนภัทร อารมย์ชื่น — CV(Thanaphat-Gee.github.io)
 
 **_เกี่ยวกับฉัน_**
 
