@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ธนภัทร อารมย์ชื่น — CV</title>
+<style>
+  :root{
+    --dark-blue:#00192c;
+    --heading:#000000;
+    --line:#040000;
+    --ink:#222222;
+    --grad:#DCE6F1;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI','Tahoma',Arial,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at top left, var(--grad) 0%, #ffffff 35%),
+      radial-gradient(circle at bottom right, var(--grad) 0%, #ffffff 35%),
+      #ffffff;
+    min-height:100vh;
+    padding:48px 20px;
+  }
+  .page{
+    max-width:720px;
+    margin:0 auto;
+    background:#c4f1f4;
+    padding:40px 48px 56px;
+  }
+  .name{
+    text-align:center;
+    font-size:30px;
+    font-weight:800;
+    margin:0 0 6px;
+    letter-spacing:0.02em;
+  }
+  .contact-label{
+    text-align:center;
+    font-size:13px;
+    color:#444;
+    margin:0 0 6px;
+  }
+  .contact-line{
+    text-align:center;
+    font-size:14px;
+    color:var(--dark-blue);
+    margin:0 0 18px;
+    font-weight:400;
+  }
+  hr.top-line{
+    border:none; border-top:2px solid var(--line);
+    margin:0 0 30px;
+  }
+  section{ margin-bottom:26px; }
+  h2.section-title{
+    color:var(--heading);
+    font-size:17px;
+    font-weight:700;
+    margin:0 0 6px;
+  }
+  hr.section-line{
+    border:none; border-top:1.5px solid var(--line);
+    margin:0 0 14px;
+  }
+  .profile-text{
+    font-size:14px;
+    color:var(--ink);
+    line-height:1.75;
+    margin:0;
+  }
+  ul.achv-list{
+    list-style:none; margin:0; padding:0;
+  }
+  ul.achv-list li{
+    font-size:14px; color:var(--dark-blue); margin-bottom:8px;
+    padding-left:18px; position:relative;
+  }
+  ul.achv-list li::before{
+    content:"➤"; position:absolute; left:0; top:0; font-size:11px; color:var(--dark-blue);
+  }
+  .edu-row, .work-row{
+    display:grid; grid-template-columns:1fr 1fr; gap:6px 24px;
+    font-size:14px; color:var(--dark-blue); margin-bottom:16px;
+  }
+  .edu-row .from-to, .work-row .from-to{ font-weight:700; }
+  .edu-row .grade, .work-row .duties{ color:var(--dark-blue); font-size:13.5px; }
+  .edu-row .course, .work-row .position{ font-weight:700; }
+  .edu-row .inst, .work-row .company{ font-size:13.5px; }
+
+  .cta-wrap{
+    text-align:center; margin-top:40px;
+  }
+  .btn{
+    display:inline-block;
+    background:var(--dark-blue);
+    color:#ffffff;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    padding:12px 28px;
+    border-radius:4px;
+    transition:background .15s ease;
+  }
+  .btn:hover{ background:#164468; }
+
+  @media (max-width:600px){
+    .page{ padding:32px 22px 44px; }
+    .edu-row, .work-row{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <p class="name">ธนภัทร อารมย์ชื่น</p>
+  <p class="contact-label">Contact address</p>
+  <p class="contact-line">Mobile: <b>094-682-5183</b> &nbsp;&nbsp; E-mail: <b>thanaphat.ar@ku.th</b></p>
+  <hr class="top-line">
+
+  <section>
+    <h2 class="section-title">ประวัติส่วนตัว</h2>
+    <hr class="section-line">
+    <p class="profile-text">
+      เป็นคนขยันและตั้งใจทำงาน มุ่งทำงานที่ได้รับมอบหมายให้เสร็จก่อนเสมอ ตรงต่อเวลาและมีความรับผิดชอบในหน้าที่
+      สามารถปรับตัวเข้ากับสภาพแวดล้อมใหม่ ๆ ได้อย่างรวดเร็ว ยินดีทำงานร่วมกับผู้อื่น รับฟังความคิดเห็น
+      และช่วยหาทางออกเมื่อทีมเจอปัญหา
+    </p>
+  </section>
+
+  <section>
+    <h2 class="section-title">ทักษะและความสามารถ</h2>
+    <hr class="section-line">
+    <ul class="achv-list">
+      <li>การใช้งาน Visual Studio Code</li>
+      <li>การเขียน HTML เบื้องต้น</li>
+      <li>ทักษะด้าน Development</li>
+      <li>ทักษะด้าน Interactive Computer Graphics</li>
+      <li>ทักษะด้าน System Analysis &amp; Design</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">การศึกษา</h2>
+    <hr class="section-line">
+    <div class="edu-row">
+      <div>
+        <div class="from-to">ปัจจุบัน (ปีที่ 3)</div>
+        <div class="grade">สถานะ: กำลังศึกษา</div>
+      </div>
+      <div>
+        <div class="course">สาขาวิทยาการคอมพิวเตอร์</div>
+        <div class="inst">คณะศิลปศาสตร์และวิทยาศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">ประสบการณ์</h2>
+    <hr class="section-line">
+    <div class="work-row">
+      <div>
+        <div class="from-to">รายวิชา ICG</div>
+        <div class="duties">พัฒนาระบบ raster graphics และ sprite engine ด้วย HTML5 Canvas ตอบสนองคีย์บอร์ด/เมาส์แบบเรียลไทม์</div>
+      </div>
+      <div>
+        <div class="position">Interactive Computer Graphics</div>
+        <div class="company">มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-wrap">
+    <a class="btn" href="raster-graphics.html">ดูผลงาน (Interactive Computer Graphics) →</a>
+  </div>
+
+</div>
+
+</body>
+</html>
