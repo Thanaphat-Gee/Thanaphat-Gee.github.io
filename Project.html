@@ -23,13 +23,13 @@
 
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true; // Shadow
+        renderer.shadowMap.enabled = true; 
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         document.body.appendChild(renderer.domElement);
 
         const scene = new THREE.Scene();
 
-        
+
         const camera = new THREE.PerspectiveCamera(
             75,
             window.innerWidth / window.innerHeight,
@@ -40,17 +40,16 @@
         camera.lookAt(0, 0, 0);
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-        const abmientLight = new THREE.AmbientLight(0x404040, 1); // soft white light
+        const abmientLight = new THREE.AmbientLight(0x404040, 1); 
         scene.add(abmientLight);
 
-        
+
         const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
         directionalLight.position.set(10, 10, 10);
         directionalLight.castShadow = true;
         scene.add(directionalLight);
 
-
-        
+        //skybox
         const exrSkyboxUrl = 'https://dl.polyhaven.org/file/ph-assets/HDRIs/exr/1k/wooden_lounge_1k.exr';
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
         pmremGenerator.compileEquirectangularShader();
@@ -68,38 +67,101 @@
                 console.error('Unable to load EXR skybox:', error);
             });
 
+        //Picking
+        const pickables = [];
+        const raycaster = new THREE.Raycaster();
+        const pointer = new THREE.Vector2();
+        const targetLookAt = new THREE.Vector3();
+        const targetCameraPosition = new THREE.Vector3();
+        const zoomDistance = 2;
+        let zooming = false;
+        let picked_object = null;
+
+        renderer.domElement.addEventListener('click', onPick);
+        function onPick(e) {
+            const r = renderer.domElement.getBoundingClientRect();
+            const x = (e.clientX ?? e.touches[0].clientX) - r.left;
+            const y = (e.clientY ?? e.touches[0].clientY) - r.top;
+            pointer.x = (x / r.width) * 2 - 1;
+            pointer.y = -(y / r.height) * 2 + 1;
+
+            raycaster.setFromCamera(pointer, camera);
+            const hit = raycaster.intersectObjects(pickables, false)[0];
+            if (hit == null) {
+                picked_object = null;
+                return;
+            }
+            picked_object = hit.object;
+            const box = new THREE.Box3().setFromObject(hit.object);
+            const center = new THREE.Vector3();
+            box.getCenter(center);
+
+            targetLookAt.copy(center);                                      
+            targetCameraPosition.set(center.x, center.y, center.z + zoomDistance);  
+            zooming = true;
+        }
 
 
 
-
-        //load glb และใช้ pbr material
-        const clock = new THREE.Clock();
-        let mixer;
+        // Load Items
         const loader = new THREE.GLTFLoader();
-        loader.load('https://Thanaphat-Gee.github.io/Bowl.glb', (gltf) => {
-            const model = gltf.scene;
-            model.traverse((child) => {
+
+        let All, Picture1, Picture2;
+
+        loader.load('https://Thanaphat-Gee.github.io/Project_Items/All.glb', (gltf) => {
+            All = gltf.scene;
+            All.traverse((child) => {
                 if (child.isMesh) {
                     child.castShadow = true;
                     child.receiveShadow = true;
                 }
             });
-            model.position.set(0, 0, 1);
-            model.scale.set(3, 3, 3);
-            scene.add(model);
-            mixer = new THREE.AnimationMixer(model);
-            const clip = THREE.AnimationClip.findByName(gltf.animations, 'door_opening');
-            if (clip) mixer.clipAction(clip).play();
-        });
-      
-
-
-
+            All.position.set(0, 0, 0);
+            All.scale.set(1, 1, 1);
+            scene.add(All);
+        })
         
+        loader.load('https://Thanaphat-Gee.github.io/Project_Items/Picture1.glb', (gltf) => {
+            Picture1 = gltf.scene;
+            Picture1.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                    pickables.push(child);
+                }
+            });
+            Picture1.position.set(0, 0, 0);
+            Picture1.scale.set(1, 1, 1);
+            scene.add(Picture1);
+        });
+
+        loader.load('https://Thanaphat-Gee.github.io/Project_Items/Picture2.glb', (gltf) => {
+            Picture2 = gltf.scene;
+            Picture2.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                    pickables.push(child);
+                }
+            });
+            Picture2.position.set(0, 0, 0);
+            Picture2.scale.set(1, 1, 1);
+            scene.add(Picture2);
+        });
+
+
+
         function animate(t) {
-            const delta = clock.getDelta();
-            if (mixer) mixer.update(delta);
-            
+            if (zooming) {
+                camera.position.lerp(targetCameraPosition, 0.05);
+                controls.target.lerp(targetLookAt, 0.05);
+            }
+
+            if (camera.position.distanceTo(targetCameraPosition) < 0.1) {
+                zooming = false;
+            }
+
+            controls.update();
             renderer.render(scene, camera);
             requestAnimationFrame(animate);
         }
